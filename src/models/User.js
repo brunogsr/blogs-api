@@ -6,7 +6,7 @@ const userModel = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    display_name: {
+    displayName: {
       allowNull: false,
       type: DataTypes.STRING,
     },
@@ -22,8 +22,17 @@ const userModel = (sequelize, DataTypes) => {
       allowNull: true,
       type: DataTypes.STRING,
     },
+  }, 
+  {
+    underscored: true,
+    tableName: 'users',
+    timestamps: false,
   });
   
+  User.associate = (models) => {
+    User.hasMany(models.BlogPost, {
+      foreignKey: 'user_id', as: 'user'});
+    };
   return User;
   }
 
