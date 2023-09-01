@@ -8,9 +8,12 @@ const login = async (req, res) => {
   return res.status(user.status).json(user.data);
 };
 
-// const user = async (req, res) => {
-//   const { displayName, email, password, image } = req.body;
-// };
+const createUser = async (req, res) => {
+  const user = await userService.createUser(req.body);
+  return res.status(user.status).json(user.data);
+  // return user;
+};
 module.exports = {
   login,
+  createUser,
 };

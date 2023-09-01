@@ -1,15 +1,11 @@
 const errors = {
-  'any.string': 400,
+  'string.base': 400,
+  'number.min': 400,
+  'string.min': 400,
   'any.required': 400,
+  'string.email': 400,
 };
 
-const errorMap = (error) => {
-  const { details } = error;
-  const { message } = details[0];
-  const code = errors[details[0].code];
-  return { message, code };
-};
+const errorMap = (errorType) => errors[errorType] || 500;
 
-module.exports = {
-  errorMap,
-};
+module.exports = errorMap;
