@@ -1,3 +1,4 @@
+const { generateToken } = require('../utils/token');
 const { User } = require('../models');
 
 const createUser = async (email, password) => {
@@ -6,8 +7,15 @@ const createUser = async (email, password) => {
 };
 
 const getUserByEmailAndPassword = async (email, password) => {
-  const verifyUser = await User.findOne({ where: { email, password } });
-  return verifyUser;
+  const user = await User.findOne({ where: { email, password } });
+  if (!user) {
+    return { status: 400, data: { message: 'Invalid fields' } };
+  }
+  const { password: _, ...userWithoutPassword } = user.dataValues;
+  console.log(userWithoutPassword);
+  const token = generateToken(userWithoutPassword);
+  console.log(typeof token);
+  return { status: 200, data: { token } };
 };
 
 module.exports = {
